@@ -30,7 +30,7 @@ const setGoal = async (req: Request, res: Response) => {
   res.status(200).json(goal);
 };
 const updateGoal = async (req: Request, res: Response) => {
-  const goal = await goalModel.findById(req.query.id);
+  const goal = await goalModel.findById(req.params.id);
   if (!goal) {
     res.status(400).json({ message: "goal not found" });
     return;
@@ -41,7 +41,7 @@ const updateGoal = async (req: Request, res: Response) => {
     return;
   }
   const updatedGoal = await goalModel.findByIdAndUpdate(
-    req.query.id,
+    req.params.id,
     { goal: req.body.text },
     {
       new: true,
@@ -50,7 +50,7 @@ const updateGoal = async (req: Request, res: Response) => {
   res.status(200).json(updatedGoal);
 };
 const deleteGoal = async (req: Request, res: Response) => {
-  const goal = await goalModel.findById(req.query.id);
+  const goal = await goalModel.findById(req.params.id);
   if (!goal) {
     res.status(400).json({ message: "goal not found" });
     return;
@@ -61,7 +61,7 @@ const deleteGoal = async (req: Request, res: Response) => {
   }
 
   await goal.deleteOne();
-  res.status(200).json({ id: req.query.id });
+  res.status(200).json({ id: req.params.id });
 };
 
 export { getGoals, setGoal, updateGoal, deleteGoal };

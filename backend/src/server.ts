@@ -5,6 +5,7 @@ import userRouter from "./routes/userRoutes";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import goalRouter from "./routes/goalRoutes";
+import tokenRouter from "./routes/tokenRoutes";
 
 dotenv.config();
 
@@ -30,6 +31,7 @@ declare global {
 
 app.use("/user", userRouter);
 app.use("/goal", goalRouter);
+app.use("/token", tokenRouter);
 
 app.listen(port, host, () => {
   log.info(`listning at port ${port}`);

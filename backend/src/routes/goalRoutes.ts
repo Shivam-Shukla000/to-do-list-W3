@@ -10,7 +10,7 @@ const goalRouter = express.Router();
 
 goalRouter.get("/", protect, getGoals);
 goalRouter.post("/", protect, setGoal);
-goalRouter.put("/", protect, updateGoal);
-goalRouter.delete("/", protect, deleteGoal);
+goalRouter.put("/:id", protect, updateGoal);
+goalRouter.delete("/:id", protect, deleteGoal);
 
 export default goalRouter;

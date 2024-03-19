@@ -52,7 +52,6 @@ interface IUser extends Document {
 const loginUser = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
-    console.log(email, password);
     if (!email || !password) {
       console.log("invalid ");
       res.status(401).json({
@@ -100,11 +99,21 @@ const generateAccessToken = (id: string) => {
 const generateRefreshToken = (id: string) => {
   return jwt.sign({ id }, process.env.REFRESH_KEY as string);
 };
-// const getMe = async (req: Request, res: Response) => {
-//   try {
-//   } catch (error) {
-//     log.error(error);
-//   }
-// };
+const getMe = async (req: Request, res: Response) => {
+  try {
+    const me = await userModel.findById(req.user._id);
+    if (!me) {
+      res.status(401).json({ message: "couldnt find user in database" });
+      return;
+    }
+    res.status(200).json({
+      id: me?._id,
+      email: me?.email,
+      name: me?.name,
+    });
+  } catch (error) {
+    log.error(error);
+  }
+};
 
-export { registerUser, loginUser };
+export { registerUser, loginUser, getMe };
